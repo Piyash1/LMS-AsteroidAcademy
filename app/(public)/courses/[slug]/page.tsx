@@ -38,6 +38,7 @@ export default async function SlugPage({ params }: { params: Params }) {
             fill
             className="w-full rounded-xl aspect-video h-full object-cover"
             priority
+            suppressHydrationWarning
           />
 
           <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
@@ -55,20 +56,20 @@ export default async function SlugPage({ params }: { params: Params }) {
 
           <div className="flex flex-wrap gap-3">
             <Badge className="flex items-center gap-1 px-3 py-1">
-              <IconChartBar className="size-4" />
+              <IconChartBar className="size-4" suppressHydrationWarning />
               <span>{course.level}</span>
             </Badge>
             <Badge className="flex items-center gap-1 px-3 py-1">
-              <IconCategory className="size-4" />
+              <IconCategory className="size-4" suppressHydrationWarning />
               <span>{course.category}</span>
             </Badge>
             <Badge className="flex items-center gap-1 px-3 py-1">
-              <IconClock className="size-4" />
+              <IconClock className="size-4" suppressHydrationWarning />
               <span>{course.duration}</span>
             </Badge>
           </div>
 
-          <Separator className="my-8" />
+          <Separator className="my-8" suppressHydrationWarning />
 
           <div className="space-y-6">
             <h2 className="text-2xl font-bold tracking-tight">
@@ -134,7 +135,10 @@ export default async function SlugPage({ params }: { params: Params }) {
                                   {chapter.lesson.length === 1 ? "" : "s"}
                                 </Badge>
 
-                                <IconChevronDown className="size-5 text-muted-foreground" />
+                                <IconChevronDown
+                                  className="size-5 text-muted-foreground"
+                                  suppressHydrationWarning
+                                />
                               </div>
                             </div>
                           </CardContent>
@@ -149,7 +153,10 @@ export default async function SlugPage({ params }: { params: Params }) {
                                 className="flex items-center gap-4 rounded-lg p-3 hover:bg-accent transition-colors"
                               >
                                 <div className="flex size-8 items-center justify-center rounded-full bg-background border-2 border-primary/20">
-                                  <IconPlayerPlay className="size-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                                  <IconPlayerPlay
+                                    className="size-4 text-muted-foreground group-hover:text-primary transition-colors"
+                                    suppressHydrationWarning
+                                  />
                                 </div>
 
                                 <div className="flex-1">
@@ -195,7 +202,7 @@ export default async function SlugPage({ params }: { params: Params }) {
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center gap-3">
                     <div className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <IconClock className="size-4" />
+                      <IconClock className="size-4" suppressHydrationWarning />
                     </div>
                     <div>
                       <p className="text-sm font-medium">Duration</p>
@@ -207,7 +214,10 @@ export default async function SlugPage({ params }: { params: Params }) {
 
                   <div className="flex items-center gap-3">
                     <div className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <IconChartBar className="size-4" />
+                      <IconChartBar
+                        className="size-4"
+                        suppressHydrationWarning
+                      />
                     </div>
                     <div>
                       <p className="text-sm font-medium">Difficulty Level</p>
@@ -219,7 +229,10 @@ export default async function SlugPage({ params }: { params: Params }) {
 
                   <div className="flex items-center gap-3">
                     <div className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <IconCategory className="size-4" />
+                      <IconCategory
+                        className="size-4"
+                        suppressHydrationWarning
+                      />
                     </div>
                     <div>
                       <p className="text-sm font-medium">Category</p>
@@ -231,7 +244,7 @@ export default async function SlugPage({ params }: { params: Params }) {
 
                   <div className="flex items-center gap-3">
                     <div className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <IconBook className="size-4" />
+                      <IconBook className="size-4" suppressHydrationWarning />
                     </div>
                     <div>
                       <p className="text-sm font-medium">Total Lessons</p>
@@ -252,19 +265,19 @@ export default async function SlugPage({ params }: { params: Params }) {
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2 text-sm">
                     <div className="rounded-full bg-green-500/10 text-green-500 p-1">
-                      <CheckIcon className="size-5" />
+                      <CheckIcon className="size-5" suppressHydrationWarning />
                     </div>
                     <span>Full lifetime access</span>
                   </li>
                   <li className="flex items-center gap-2 text-sm">
                     <div className="rounded-full bg-green-500/10 text-green-500 p-1">
-                      <CheckIcon className="size-5" />
+                      <CheckIcon className="size-5" suppressHydrationWarning />
                     </div>
                     <span>Access on mobile and Desktop</span>
                   </li>
                   <li className="flex items-center gap-2 text-sm">
                     <div className="rounded-full bg-green-500/10 text-green-500 p-1">
-                      <CheckIcon className="size-5" />
+                      <CheckIcon className="size-5" suppressHydrationWarning />
                     </div>
                     <span>Certificate of completion</span>
                   </li>

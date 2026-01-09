@@ -1,7 +1,7 @@
 "use server";
 
 import { requireAdmin } from "@/app/data/admin/require-admin";
-import arcjet, { detectBot, fixedWindow } from "@/lib/arcjet";
+import arcjet, { fixedWindow } from "@/lib/arcjet";
 import { prisma } from "@/lib/db";
 import { ApiResponse } from "@/lib/types";
 import {
@@ -15,31 +15,27 @@ import {
 import { request } from "@arcjet/next";
 import { revalidatePath } from "next/cache";
 
-const aj = arcjet
-  .withRule(
-    detectBot({
-      mode: "LIVE",
-      allow: [],
-    })
-  )
-  .withRule(
-    fixedWindow({
-      mode: "LIVE",
-      window: "1m",
-      max: 5,
-    })
-  );
+const aj = arcjet.withRule(
+  fixedWindow({
+    mode: "LIVE",
+    window: "1m",
+    max: 5,
+  })
+);
 
 export async function editCourse(
   data: CourseSchemaType,
   courseId: string
 ): Promise<ApiResponse> {
-  const user = await requireAdmin();
+  const session = await requireAdmin();
+  if (!session || !session.user) {
+    return { status: "error", message: "Unauthorized" };
+  }
 
   try {
     const req = await request();
     const decision = await aj.protect(req, {
-      fingerprint: user.user.id,
+      fingerprint: session.user.id,
     });
 
     if (decision.isDenied()) {
@@ -64,7 +60,7 @@ export async function editCourse(
     await prisma.course.update({
       where: {
         id: courseId,
-        userId: user.user.id,
+        userId: session.user.id,
       },
       data: {
         ...result.data,
@@ -87,7 +83,10 @@ export async function reorderChapters(
   courseId: string,
   chapters: { id: string; position: number }[]
 ): Promise<ApiResponse> {
-  const user = await requireAdmin();
+  const session = await requireAdmin();
+  if (!session || !session.user) {
+    return { status: "error", message: "Unauthorized" };
+  }
 
   try {
     await prisma.$transaction(
@@ -120,7 +119,10 @@ export async function reorderLessons(
   chapterId: string,
   lessons: { id: string; position: number }[]
 ): Promise<ApiResponse> {
-  const user = await requireAdmin();
+  const session = await requireAdmin();
+  if (!session || !session.user) {
+    return { status: "error", message: "Unauthorized" };
+  }
 
   try {
     await prisma.$transaction(
@@ -152,7 +154,10 @@ export async function reorderLessons(
 export async function createChapter(
   data: ChapterSchemaType
 ): Promise<ApiResponse> {
-  await requireAdmin();
+  const session = await requireAdmin();
+  if (!session || !session.user) {
+    return { status: "error", message: "Unauthorized" };
+  }
   try {
     const result = chapterSchema.safeParse(data);
 
@@ -202,7 +207,10 @@ export async function createChapter(
 export async function createLesson(
   data: LessonSchemaType
 ): Promise<ApiResponse> {
-  await requireAdmin();
+  const session = await requireAdmin();
+  if (!session || !session.user) {
+    return { status: "error", message: "Unauthorized" };
+  }
   try {
     const result = lessonSchema.safeParse(data);
 
@@ -256,7 +264,10 @@ export async function deleteChapter(
   chapterId: string,
   courseId: string
 ): Promise<ApiResponse> {
-  await requireAdmin();
+  const session = await requireAdmin();
+  if (!session || !session.user) {
+    return { status: "error", message: "Unauthorized" };
+  }
   try {
     await prisma.$transaction(async (tx) => {
       // 1. Delete the chapter
@@ -299,7 +310,10 @@ export async function deleteLesson(
   lessonId: string,
   courseId: string
 ): Promise<ApiResponse> {
-  await requireAdmin();
+  const session = await requireAdmin();
+  if (!session || !session.user) {
+    return { status: "error", message: "Unauthorized" };
+  }
   try {
     await prisma.$transaction(async (tx) => {
       // 1. Find the lesson to get its chapterId

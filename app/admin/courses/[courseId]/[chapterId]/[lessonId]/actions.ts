@@ -11,7 +11,10 @@ export async function updateLesson(
   lessonId: string,
   courseId: string
 ): Promise<ApiResponse> {
-  await requireAdmin();
+  const session = await requireAdmin();
+  if (!session || !session.user) {
+    return { status: "error", message: "Unauthorized" };
+  }
   try {
     const result = lessonSchema.safeParse(values);
     if (!result.success) {

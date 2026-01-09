@@ -21,7 +21,12 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center mx-auto px-4 md:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2 shrink-0 mr-20">
-          <Image src={Logo} alt="Logo" className="size-10 rounded-md" />
+          <Image
+            src={Logo}
+            alt="Logo"
+            className="size-10 rounded-md"
+            suppressHydrationWarning
+          />
           <span className="text-xl font-bold whitespace-nowrap">
             Asteroid Academy
           </span>

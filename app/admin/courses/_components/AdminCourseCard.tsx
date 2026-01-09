@@ -98,6 +98,7 @@ export function AdminCourseCard({ data }: AdminCourseCardProps) {
           width={600}
           height={400}
           className="w-full aspect-video object-cover transition-transform duration-500 group-hover:scale-105"
+          suppressHydrationWarning
         />
 
         {/* Gradient Overlay */}
@@ -133,7 +134,7 @@ export function AdminCourseCard({ data }: AdminCourseCardProps) {
                   className="bg-white/90 hover:bg-white text-foreground shadow-md h-8 w-8"
                   disabled={isPending}
                 >
-                  <MoreVertical className="w-4 h-4" />
+                  <MoreVertical className="w-4 h-4" suppressHydrationWarning />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">

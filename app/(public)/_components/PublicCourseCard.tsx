@@ -25,6 +25,7 @@ export default function PublicCourseCard({ data }: iAppProps) {
         width={600}
         height={400}
         className="w-full rounded-t-xl aspect-video h-full object-cover"
+        suppressHydrationWarning
       />
 
       <CardContent className="p-4">
@@ -40,12 +41,22 @@ export default function PublicCourseCard({ data }: iAppProps) {
 
         <div className="mt-4 flex items-center gap-x-5">
           <div className="flex items-center gap-x-2">
-            <TimerIcon className="size-6 p-1 rounded-md text-primary bg-primary/10" />
-            <p className="text-sm text-muted-foreground">{data.duration}h</p>
+            <TimerIcon
+              className="size-6 p-1 rounded-md text-primary bg-primary/10"
+              suppressHydrationWarning
+            />
+            <p className="text-sm text-muted-foreground font-medium">
+              {data.duration}h
+            </p>
           </div>
           <div className="flex items-center gap-x-2">
-            <SchoolIcon className="size-6 p-1 rounded-md text-primary bg-primary/10" />
-            <p className="text-sm text-muted-foreground">{data.category}</p>
+            <SchoolIcon
+              className="size-6 p-1 rounded-md text-primary bg-primary/10"
+              suppressHydrationWarning
+            />
+            <p className="text-sm text-muted-foreground font-medium">
+              {data.category}
+            </p>
           </div>
         </div>
 

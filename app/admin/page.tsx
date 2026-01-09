@@ -7,7 +7,7 @@ export default function AdminIndexPage() {
   return (
     <>
       <SectionCards />
-      <div className="px-4 lg:px-6">
+      <div className="px-4 lg:px-6" suppressHydrationWarning>
         <ChartAreaInteractive />
       </div>
       <DataTable data={data} />
