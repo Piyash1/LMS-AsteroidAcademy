@@ -14,7 +14,13 @@ export function EnrollmentButton({ courseId }: { courseId: string }) {
       try {
         const result = await enrollInCourseAction(courseId);
         if (result.status === "success") {
-          toast.success("Course enrolled successfully!");
+          if (result.url) {
+            window.location.href = result.url;
+          } else {
+            toast.success(result.message);
+          }
+        } else {
+          toast.error(result.message);
         }
       } catch (error) {
         toast.error("Failed to enroll in course. Please try again.");

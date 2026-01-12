@@ -10,95 +10,86 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export function SectionCards() {
+interface SectionCardsProps {
+  stats: {
+    totalRevenue: number;
+    totalStudents: number;
+    totalCourses: number;
+    activeEnrollments: number;
+  };
+}
+
+export function SectionCards({ stats }: SectionCardsProps) {
   return (
-    <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-linear-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+    <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-linear-to-t *:data-[slot=card]:shadow-xs @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Total Revenue</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            $1,250.00
+            {new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD",
+            }).format(stats.totalRevenue)}
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
               <IconTrendingUp suppressHydrationWarning />
-              +12.5%
+              Live
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Trending up this month{" "}
-            <IconTrendingUp className="size-4" suppressHydrationWarning />
-          </div>
-          <div className="text-muted-foreground">
-            Visitors for the last 6 months
+          <div className="line-clamp-1 flex gap-2 font-medium text-muted-foreground">
+            Total sales across all courses
           </div>
         </CardFooter>
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>New Customers</CardDescription>
+          <CardDescription>Total Students</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            1,234
+            {stats.totalStudents.toLocaleString()}
           </CardTitle>
           <CardAction>
-            <Badge variant="outline">
-              <IconTrendingDown suppressHydrationWarning />
-              -20%
-            </Badge>
+            <Badge variant="outline">Users</Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Down 20% this period{" "}
-            <IconTrendingDown className="size-4" suppressHydrationWarning />
-          </div>
-          <div className="text-muted-foreground">
-            Acquisition needs attention
+          <div className="line-clamp-1 flex gap-2 font-medium text-muted-foreground">
+            Unique students enrolled
           </div>
         </CardFooter>
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Active Accounts</CardDescription>
+          <CardDescription>Active Enrollments</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            45,678
+            {stats.activeEnrollments.toLocaleString()}
           </CardTitle>
           <CardAction>
-            <Badge variant="outline">
-              <IconTrendingUp suppressHydrationWarning />
-              +12.5%
-            </Badge>
+            <Badge variant="outline">Active</Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Strong user retention{" "}
-            <IconTrendingUp className="size-4" suppressHydrationWarning />
+          <div className="line-clamp-1 flex gap-2 font-medium text-muted-foreground">
+            Total purchased course seats
           </div>
-          <div className="text-muted-foreground">Engagement exceed targets</div>
         </CardFooter>
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Growth Rate</CardDescription>
+          <CardDescription>Total Courses</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            4.5%
+            {stats.totalCourses}
           </CardTitle>
           <CardAction>
-            <Badge variant="outline">
-              <IconTrendingUp suppressHydrationWarning />
-              +4.5%
-            </Badge>
+            <Badge variant="outline">Library</Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Steady performance increase{" "}
-            <IconTrendingUp className="size-4" suppressHydrationWarning />
+          <div className="line-clamp-1 flex gap-2 font-medium text-muted-foreground">
+            Courses available for sale
           </div>
-          <div className="text-muted-foreground">Meets growth projections</div>
         </CardFooter>
       </Card>
     </div>

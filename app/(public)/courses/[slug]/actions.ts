@@ -20,10 +20,9 @@ const aj = arcjet.withRule(
 
 export async function enrollInCourseAction(
   courseId: string
-): Promise<ApiResponse | never> {
+): Promise<ApiResponse & { url?: string }> {
   const user = await requireUser();
 
-  let checkoutUrl: string;
   try {
     const req = await request();
     const decision = await aj.protect(req, {
@@ -153,12 +152,13 @@ export async function enrollInCourseAction(
       });
 
       return {
-        enrollment: enrollment,
-        checkoutUrl: checkoutSession.url,
+        status: "success",
+        message: "Redirecting to payment...",
+        url: checkoutSession.url as string,
       };
     });
 
-    checkoutUrl = result.checkoutUrl as string;
+    return result as ApiResponse & { url?: string };
   } catch (error) {
     if (error instanceof Stripe.errors.StripeError) {
       return {
@@ -171,6 +171,4 @@ export async function enrollInCourseAction(
       message: "Something went wrong",
     };
   }
-
-  redirect(checkoutUrl);
 }

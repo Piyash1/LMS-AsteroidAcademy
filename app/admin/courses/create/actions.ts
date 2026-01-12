@@ -3,6 +3,7 @@
 import { requireAdmin } from "@/app/data/admin/require-admin";
 import arcjet, { fixedWindow } from "@/lib/arcjet";
 import { prisma } from "@/lib/db";
+import { stripe } from "@/lib/stripe";
 import { ApiResponse } from "@/lib/types";
 import { courseSchema, CourseSchemaType } from "@/lib/zodSchemas";
 import { request } from "@arcjet/next";
@@ -47,32 +48,19 @@ export async function createCourse(
     return { status: "error", message: "Invalid fields" };
   }
 
-  const {
-    title,
-    description,
-    fileKey,
-    price,
-    duration,
-    level,
-    category,
-    smallDescription,
-    slug,
-    status,
-  } = validatedFields.data;
-
+  const data = await stripe.products.create({
+    name: validatedFields.data.title,
+    description: validatedFields.data.smallDescription,
+    default_price_data: {
+      currency: "usd",
+      unit_amount: validatedFields.data.price * 100,
+    },
+  });
   await prisma.course.create({
     data: {
-      title,
-      description,
-      fileKey,
-      price,
-      duration,
-      level,
-      category,
-      smallDescription,
-      slug,
-      status,
-      userId: session.user.id,
+      ...validatedFields.data,
+      userId: session?.user.id as string,
+      stripePriceId: data.default_price as string,
     },
   });
 

@@ -22,21 +22,11 @@ export const courseSchema = z.object({
     .string()
     .min(3, { message: "Description must be at least 3 characters long" }),
   fileKey: z.string().min(1, { message: "File key is required" }),
-  price: z.coerce
-    .number()
-    .min(1, { message: "Price must be at least 1" }) as z.ZodType<
-    number,
-    any,
-    any
-  >,
+  price: z.coerce.number().min(1, { message: "Price must be at least 1" }),
   duration: z.coerce
     .number()
     .min(1, { message: "Duration must be at least 1" })
-    .max(500, { message: "Duration must be at most 500" }) as z.ZodType<
-    number,
-    any,
-    any
-  >,
+    .max(500, { message: "Duration must be at most 500" }),
   level: z.enum(courseLevels, {
     message:
       "Level must be one of the following: BEGINNER, INTERMEDIATE, ADVANCED",
