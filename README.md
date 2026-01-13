@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Asteroid Academy
 
-## Getting Started
+Asteroid Academy is a modern, full-stack Learning Management System (LMS) designed for a premium learning experience. Built with a focus on speed, aesthetics, and user engagement.
 
-First, run the development server:
+![Dashboard Preview](https://moniruzzamanpiyash.netlify.app/assets/img/hero-img.png)
+_Note: Add your own platform screenshot here_
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **🎓 Student Dashboard**: Track your enrolled courses and progress with a clean, intuitive interface.
+- **🛠️ Admin Panel**: Robust course creation and management tools for administrators.
+- **📱 Fully Responsive**: Optimized for every screen size—from mobile phones to desktop monitors.
+- **🎉 Interactive UX**: Delightful user interactions with confetti bursts on lesson completion and instant toast notifications.
+- **🔒 Secure Auth**: Advanced authentication powered by `better-auth`, featuring email OTP and admin-level protection.
+- **🧭 Smart Navigation**: Dynamic breadcrumbs and intelligent redirects after sign-in.
+- **⚡ Performance**: Built on Next.js 15 for lightning-fast server-side rendering and static generation.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework**: [Next.js 15 (App Router)](https://nextjs.org)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com) & [Shadcn UI](https://ui.shadcn.com)
+- **Database**: [PostgreSQL](https://www.postgresql.org) with [Prisma ORM](https://www.prisma.io)
+- **Auth**: [Better-Auth](https://better-auth.com)
+- **Icons**: [Lucide React](https://lucide.dev)
+- **Validation**: [Zod](https://zod.dev) & [React Hook Form](https://react-hook-form.com)
+- **Animations**: [Canvas Confetti](https://github.com/catdad/canvas-confetti)
+- **Notifications**: [Sonner](https://sonner.stevenly.me)
 
-## Learn More
+## 🚀 Getting Started
 
-To learn more about Next.js, take a look at the following resources:
+### Prerequisites
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Node.js installed
+- PostgreSQL database
+- `pnpm` (recommended)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Installation
 
-## Deploy on Vercel
+1. **Clone the repository:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   git clone https://github.com/piyash1/asteroid-academy.git
+   cd asteroid-academy
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. **Install dependencies:**
+
+   ```bash
+   pnpm install
+   ```
+
+3. **Set up Environment Variables:**
+   Create a `.env` file based on the `.env.example` provided in the root directory.
+
+4. **Initialize Database:**
+
+   ```bash
+   npx prisma db push
+   npx prisma generate
+   ```
+
+5. **Run the development server:**
+   ```bash
+   pnpm dev
+   ```
+
+Open [http://localhost:3000](http://localhost:3000) to view the application locally.
+
+## 📄 License & Attribution
+
+This project was created with ❤️ by [Moniruzzaman Piyash](https://moniruzzamanpiyash.netlify.app/).
+
+---
+
+_Built for the future of learning._
