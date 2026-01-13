@@ -12,7 +12,6 @@ import {
   GraduationCap,
   Users,
   Clock,
-  CheckCircle,
   ArrowRight,
   Sparkles,
 } from "lucide-react";
