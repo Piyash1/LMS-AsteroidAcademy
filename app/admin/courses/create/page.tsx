@@ -51,7 +51,7 @@ export default function CourseCreationPage() {
 
   // 1. Define your form.
   const form = useForm<CourseSchemaType>({
-    resolver: zodResolver(courseSchema),
+    resolver: zodResolver(courseSchema) as any,
     defaultValues: {
       title: "",
       description: "",
@@ -64,7 +64,7 @@ export default function CourseCreationPage() {
       slug: "",
       status: "DRAFT",
     },
-  });
+  }) as any;
 
   // 2. Define a submit handler.
   function onSubmit(values: CourseSchemaType) {
@@ -107,7 +107,7 @@ export default function CourseCreationPage() {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <FormField<CourseSchemaType>
+              <FormField
                 control={form.control}
                 name="title"
                 render={({ field }) => (
@@ -121,7 +121,7 @@ export default function CourseCreationPage() {
                 )}
               />
 
-              <FormField<CourseSchemaType>
+              <FormField
                 control={form.control}
                 name="slug"
                 render={({ field }) => (
@@ -150,7 +150,7 @@ export default function CourseCreationPage() {
                 )}
               />
 
-              <FormField<CourseSchemaType>
+              <FormField
                 control={form.control}
                 name="smallDescription"
                 render={({ field }) => (
@@ -168,7 +168,7 @@ export default function CourseCreationPage() {
                 )}
               />
 
-              <FormField<CourseSchemaType>
+              <FormField
                 control={form.control}
                 name="description"
                 render={({ field }) => (
@@ -176,7 +176,7 @@ export default function CourseCreationPage() {
                     <FormLabel>Full Description</FormLabel>
                     <FormControl>
                       <RichTextEditor
-                        value={field.value}
+                        value={field.value as string}
                         onChange={field.onChange}
                       />
                       {/* <Textarea
@@ -190,7 +190,7 @@ export default function CourseCreationPage() {
                 )}
               />
 
-              <FormField<CourseSchemaType>
+              <FormField
                 control={form.control}
                 name="fileKey"
                 render={({ field }) => (
@@ -199,7 +199,7 @@ export default function CourseCreationPage() {
                     <FormControl>
                       <Uploader
                         fileTypeAccepted="image"
-                        value={field.value}
+                        value={field.value as string}
                         onChange={field.onChange}
                       />
                     </FormControl>
@@ -209,7 +209,7 @@ export default function CourseCreationPage() {
               />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormField<CourseSchemaType>
+                <FormField
                   control={form.control}
                   name="category"
                   render={({ field }) => (
@@ -236,7 +236,7 @@ export default function CourseCreationPage() {
                     </FormItem>
                   )}
                 />
-                <FormField<CourseSchemaType>
+                <FormField
                   control={form.control}
                   name="level"
                   render={({ field }) => (
@@ -264,7 +264,7 @@ export default function CourseCreationPage() {
                   )}
                 />
 
-                <FormField<CourseSchemaType>
+                <FormField
                   control={form.control}
                   name="duration"
                   render={({ field }) => (
@@ -278,7 +278,7 @@ export default function CourseCreationPage() {
                   )}
                 />
 
-                <FormField<CourseSchemaType>
+                <FormField
                   control={form.control}
                   name="price"
                   render={({ field }) => (
@@ -301,7 +301,7 @@ export default function CourseCreationPage() {
                     <FormLabel>Status</FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      defaultValue={field.value as string}
                     >
                       <FormControl>
                         <SelectTrigger className="w-full">

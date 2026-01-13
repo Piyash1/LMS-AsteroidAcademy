@@ -47,20 +47,20 @@ export function EditCourseForm({ data }: iAppProps) {
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<CourseSchemaType>({
-    resolver: zodResolver(courseSchema),
+    resolver: zodResolver(courseSchema) as any,
     defaultValues: {
       title: data.title,
       description: data.description,
       fileKey: data.fileKey,
-      price: data.price,
-      duration: data.duration,
+      price: data.price as number,
+      duration: data.duration as number,
       level: data.level,
       category: data.category as CourseSchemaType["category"],
       smallDescription: data.smallDescription,
       slug: data.slug,
       status: data.status,
     },
-  });
+  }) as any;
 
   function onSubmit(values: CourseSchemaType) {
     startTransition(async () => {
@@ -148,11 +148,14 @@ export function EditCourseForm({ data }: iAppProps) {
             <FormItem>
               <FormLabel>Full Description</FormLabel>
               <FormControl>
-                <RichTextEditor value={field.value} onChange={field.onChange} />
+                <RichTextEditor
+                  value={field.value as string}
+                  onChange={field.onChange}
+                />
                 {/* <Textarea
                         placeholder="Detailed course description"
                         className="min-h-[150px]"
-                        {...field}
+                       <Textarea {...field} value={field.value as string} />
                       /> */}
               </FormControl>
               <FormMessage />
@@ -169,7 +172,7 @@ export function EditCourseForm({ data }: iAppProps) {
               <FormControl>
                 <Uploader
                   fileTypeAccepted="image"
-                  value={field.value}
+                  value={field.value as string}
                   onChange={field.onChange}
                 />
               </FormControl>
@@ -179,7 +182,7 @@ export function EditCourseForm({ data }: iAppProps) {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FormField<CourseSchemaType>
+          <FormField
             control={form.control}
             name="category"
             render={({ field }) => (
@@ -206,7 +209,7 @@ export function EditCourseForm({ data }: iAppProps) {
               </FormItem>
             )}
           />
-          <FormField<CourseSchemaType>
+          <FormField
             control={form.control}
             name="level"
             render={({ field }) => (
@@ -234,7 +237,7 @@ export function EditCourseForm({ data }: iAppProps) {
             )}
           />
 
-          <FormField<CourseSchemaType>
+          <FormField
             control={form.control}
             name="duration"
             render={({ field }) => (
@@ -248,7 +251,7 @@ export function EditCourseForm({ data }: iAppProps) {
             )}
           />
 
-          <FormField<CourseSchemaType>
+          <FormField
             control={form.control}
             name="price"
             render={({ field }) => (
@@ -269,7 +272,10 @@ export function EditCourseForm({ data }: iAppProps) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Status</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value as string}
+              >
                 <FormControl>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select Status" />

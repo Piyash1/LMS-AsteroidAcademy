@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CheckCircle2, Circle } from "lucide-react";
 import { useTransition } from "react";
+import confetti from "canvas-confetti";
+import { toast } from "sonner";
 
 interface iAppProps {
   lessonId: string;
@@ -14,13 +16,29 @@ interface iAppProps {
 export function LessonCompleteButton({ lessonId, isCompleted }: iAppProps) {
   const [isPending, startTransition] = useTransition();
 
+  const handleToggle = () => {
+    startTransition(async () => {
+      try {
+        await markLessonCompleted(lessonId);
+        if (!isCompleted) {
+          confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+          });
+          toast.success("Lesson marked as completed! Nice work! 🎉");
+        } else {
+          toast.info("Lesson progress updated.");
+        }
+      } catch (error) {
+        toast.error("Failed to update lesson progress.");
+      }
+    });
+  };
+
   return (
     <Button
-      onClick={() => {
-        startTransition(() => {
-          markLessonCompleted(lessonId);
-        });
-      }}
+      onClick={handleToggle}
       disabled={isPending}
       variant={isCompleted ? "default" : "outline"}
       className={cn(

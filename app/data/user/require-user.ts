@@ -3,12 +3,14 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function requireUser() {
+  const headerList = await headers();
   const session = await auth.api.getSession({
-    headers: await headers(),
+    headers: headerList,
   });
 
   if (!session) {
-    return redirect("/login");
+    const url = headerList.get("x-url") || headerList.get("referer") || "/";
+    return redirect(`/login?redirectTo=${encodeURIComponent(url)}`);
   }
 
   return session.user;

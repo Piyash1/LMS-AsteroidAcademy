@@ -73,8 +73,8 @@ export function EnrolledCourseCard({ data, progress }: iAppProps) {
           </div>
         )}
 
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex flex-col">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex flex-row sm:flex-col items-center sm:items-start justify-between sm:justify-center w-full sm:w-auto gap-2 sm:gap-0">
             <span className="text-xs text-muted-foreground font-medium uppercase tracking-wider">
               Lessons
             </span>

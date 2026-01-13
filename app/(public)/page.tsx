@@ -18,6 +18,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 interface FeatureProps {
   title: string;
@@ -52,7 +54,11 @@ const features: FeatureProps[] = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
@@ -97,17 +103,31 @@ export default function Home() {
               Explore Courses
               <ArrowRight className="ml-2 size-4" />
             </Link>
-            <Link
-              className={buttonVariants({
-                size: "lg",
-                variant: "outline",
-                className:
-                  "h-12 px-8 text-base bg-background/50 backdrop-blur-sm",
-              })}
-              href="/login"
-            >
-              Sign in
-            </Link>
+            {session ? (
+              <Link
+                className={buttonVariants({
+                  size: "lg",
+                  variant: "outline",
+                  className:
+                    "h-12 px-8 text-base bg-background/50 backdrop-blur-sm",
+                })}
+                href="/dashboard"
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <Link
+                className={buttonVariants({
+                  size: "lg",
+                  variant: "outline",
+                  className:
+                    "h-12 px-8 text-base bg-background/50 backdrop-blur-sm",
+                })}
+                href="/login"
+              >
+                Sign in
+              </Link>
+            )}
           </div>
         </div>
       </section>
@@ -214,14 +234,14 @@ export default function Home() {
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
                 <Link
-                  href="/courses"
+                  href={session ? "/dashboard" : "/courses"}
                   className={buttonVariants({
                     size: "lg",
                     variant: "secondary",
                     className: "h-12 px-8",
                   })}
                 >
-                  Get Started
+                  {session ? "Go to Dashboard" : "Get Started"}
                 </Link>
                 <Link
                   href="/about"
