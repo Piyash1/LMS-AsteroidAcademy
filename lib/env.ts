@@ -21,8 +21,10 @@ export const env = createEnv({
 
   client: {
     NEXT_PUBLIC_S3_BUCKET_IMAGES: z.string().min(1),
+    NEXT_PUBLIC_APP_URL: z.string().url().optional(),
   },
   experimental__runtimeEnv: {
     NEXT_PUBLIC_S3_BUCKET_IMAGES: process.env.NEXT_PUBLIC_S3_BUCKET_IMAGES,
+    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
   },
 });

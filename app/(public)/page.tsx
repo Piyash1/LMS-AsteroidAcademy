@@ -243,7 +243,7 @@ export default async function Home() {
                   {session ? "Go to Dashboard" : "Get Started"}
                 </Link>
                 <Link
-                  href="/about"
+                  href="/courses"
                   className="text-sm font-semibold leading-6 text-white hover:text-white/80 transition-colors flex items-center gap-1"
                 >
                   Learn more <ArrowRight className="size-4" />
