@@ -10,6 +10,11 @@ export async function POST(req: Request) {
 
   const signature = headerList.get("Stripe-Signature") as string;
 
+  if (!signature) {
+    console.error("No Stripe-Signature header found");
+    return new Response("No signature", { status: 400 });
+  }
+
   let event: Stripe.Event;
 
   try {
@@ -18,16 +23,23 @@ export async function POST(req: Request) {
       signature,
       env.STRIPE_WEBHOOK_SECRET
     );
-  } catch {
-    return new Response("Webhook error", { status: 400 });
+    console.log(`Webhook event received: ${event.type}`);
+  } catch (err: any) {
+    console.error(`Webhook signature verification failed: ${err.message}`);
+    return new Response(`Webhook error: ${err.message}`, { status: 400 });
   }
 
   const session = event.data.object as Stripe.Checkout.Session;
 
   if (event.type === "checkout.session.completed") {
+    console.log("Checkout session completed event processing...");
     const courseId = session.metadata?.courseId;
     const userId = session.metadata?.userId;
     const enrollmentId = session.metadata?.enrollmentId;
+
+    console.log(
+      `Metadata - courseId: ${courseId}, userId: ${userId}, enrollmentId: ${enrollmentId}`
+    );
 
     if (!courseId || !userId || !enrollmentId) {
       console.error("Missing metadata in Stripe session:", session.metadata);
@@ -35,7 +47,7 @@ export async function POST(req: Request) {
     }
 
     try {
-      await prisma.enrollment.update({
+      const updatedEnrollment = await prisma.enrollment.update({
         where: {
           id: enrollmentId,
         },
@@ -46,10 +58,10 @@ export async function POST(req: Request) {
       });
 
       console.log(
-        `Successfully activated enrollment ${enrollmentId} for user ${userId}`
+        `Successfully activated enrollment ${enrollmentId} for user ${userId}. New status: ${updatedEnrollment.status}`
       );
     } catch (error) {
-      console.error("Failed to update enrollment in webhook:", error);
+      console.error("Failed to update enrollment in database:", error);
       return new Response("Database update failed", { status: 500 });
     }
   }
