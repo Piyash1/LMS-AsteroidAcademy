@@ -35,7 +35,9 @@ async function authMiddleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|api/auth).*)"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|api/auth|api/webhook).*)",
+  ],
 };
 
 export default createMiddleware(aj, async (request: NextRequest) => {
