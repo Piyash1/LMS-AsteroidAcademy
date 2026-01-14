@@ -26,32 +26,32 @@ export async function POST(req: Request) {
 
   if (event.type === "checkout.session.completed") {
     const courseId = session.metadata?.courseId;
-    const customerId = session.customer as string;
+    const userId = session.metadata?.userId;
+    const enrollmentId = session.metadata?.enrollmentId;
 
-    if (!courseId) {
-      throw new Error("Course ID is missing");
-    }
-    const user = await prisma.user.findUnique({
-      where: {
-        stripeCustomerId: customerId,
-      },
-    });
-
-    if (!user) {
-      throw new Error("User not found");
+    if (!courseId || !userId || !enrollmentId) {
+      console.error("Missing metadata in Stripe session:", session.metadata);
+      return new Response("Missing metadata", { status: 400 });
     }
 
-    await prisma.enrollment.update({
-      where: {
-        id: session.metadata?.enrollmentId,
-      },
-      data: {
-        userId: user.id,
-        courseId: courseId,
-        amount: session.amount_total as number,
-        status: "ACTIVE",
-      },
-    });
+    try {
+      await prisma.enrollment.update({
+        where: {
+          id: enrollmentId,
+        },
+        data: {
+          status: "ACTIVE",
+          amount: session.amount_total as number,
+        },
+      });
+
+      console.log(
+        `Successfully activated enrollment ${enrollmentId} for user ${userId}`
+      );
+    } catch (error) {
+      console.error("Failed to update enrollment in webhook:", error);
+      return new Response("Database update failed", { status: 500 });
+    }
   }
 
   return new Response("Success", { status: 200 });
